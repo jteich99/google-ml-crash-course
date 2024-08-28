@@ -83,26 +83,24 @@ class Model():
         epochs_trained = 0
         iteration = 0
         self.losses = []
-        used_indexes = []
+        unused_indexes = [*range(dataset_size)]
         while (epochs_trained < epochs):
             iteration += 1
             print(f"iteration {iteration}\n")
             # select data points to use in this iteration (at random):
             #   data points are used only once per epoch
-            if dataset_size - len(used_indexes) < batch_size:
+            if len(unused_indexes) < batch_size:
                 epochs_trained += 1
-                used_indexes = []
+                unused_indexes = [*range(dataset_size)]
             
             data_indexes = []
             data_points = []
             data_xi = []
             
             for i in range(batch_size):
-                random_number = random.randint(0, dataset_size - 1)
-                while (random_number in used_indexes):
-                    random_number = random.randint(0, dataset_size - 1)
+                random_number = random.randint(0, len(unused_indexes) - 1)
                 index = random_number
-                used_indexes.append(index)
+                unused_indexes.pop(index)
                 data_indexes.append(index)
                 data_points.append(dataset[self.label][index])
                 xi = []
