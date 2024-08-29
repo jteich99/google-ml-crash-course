@@ -92,6 +92,12 @@ class Model():
             if len(unused_indexes) < batch_size:
                 epochs_trained += 1
                 unused_indexes = [*range(dataset_size)]
+
+                estimated_labels = []
+                for xi in dataset_variables:
+                    estimated_labels.append(self.estimate(xi))
+                mce = mean_cuadratic_error(dataset[self.label], estimated_labels)
+                self.losses.append(mce)
             
             data_indexes = []
             data_points = []
@@ -115,7 +121,6 @@ class Model():
 
             # calculate MCE with current bias and weights:
             mce = mean_cuadratic_error(data_points, estimated_labels)
-            self.losses.append(mce)
             print(f"Mean Cuadratic Error = {mce}\n\n")
 
             # calculate weights and bias gradient
