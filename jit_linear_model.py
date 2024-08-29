@@ -11,6 +11,9 @@ import pandas as pd
 # random numbers
 import random
 
+# plots
+import matplotlib.pyplot as plt
+
 def mean_cuadratic_error(real_values: list, estimated_values: list):
     '''
     Calculate the Mean Cuadratic Error, given the real values and the estimated values.
@@ -142,3 +145,17 @@ class Model():
         for i in range(self.variables_number):
             estimated_label += self.weights[i] * variables_values[i]
         return estimated_label
+    
+    def plot_model(self, dataset:pd.DataFrame, variable_to_plot: str):
+        plt.xlabel(variable_to_plot)
+        plt.ylabel(self.label)
+        real_x = dataset[variable_to_plot]
+        real_y = dataset[self.label]
+        plt.scatter(real_x, real_y)
+
+        estimated_x = [*real_x]
+        estimated_x.sort()
+        estimated_y = []
+        for x in estimated_x:
+            estimated_y.append(self.estimate([x]))
+        return plt.plot(estimated_x, estimated_y, color = 'red')

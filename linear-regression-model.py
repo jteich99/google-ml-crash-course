@@ -10,6 +10,7 @@ import pandas as pd
 # from jit-linear-model import *
 import jit_linear_model
 
+# plots
 import matplotlib.pyplot as plt
 
 # import dataset
@@ -26,4 +27,13 @@ x = range(len(linear_model_1var.losses))
 plt.plot(x, linear_model_1var.losses)
 plt.show()
 
+x = range(len(linear_model_1var.biases))
+plt.plot(x, linear_model_1var.biases)
+plt.show()
+x = range(len(linear_model_1var.weights_saved))
+plt.plot(x, linear_model_1var.weights_saved)
+plt.show()
+
 # ADD PLOT OF MODEL VS REAL DATA
+linear_model_1var.plot_model(dataset = training_df, variable_to_plot = 'TRIP_MILES')
+plt.show()
